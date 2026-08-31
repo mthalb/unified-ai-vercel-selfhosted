@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 export default function Local() {
-  const [modelUrl, setModelUrl] = useState('');
+  // Prefill model URL from NEXT_PUBLIC_MODEL_URL if provided (set in Vercel or .env)
+  const defaultModelUrl = process.env.NEXT_PUBLIC_MODEL_URL || '';
+  const [modelUrl, setModelUrl] = useState(defaultModelUrl);
   const [status, setStatus] = useState('idle');
   const [prompt, setPrompt] = useState('');
   const [output, setOutput] = useState('');
@@ -80,6 +82,11 @@ export default function Local() {
         <div style={{ marginTop: 8 }}>
           <button onClick={loadModel}>Load model into browser</button>
         </div>
+        {defaultModelUrl && (
+          <div style={{ marginTop: 8, color: '#444' }}>
+            Using default model URL from configuration. To override, paste a different URL above.
+          </div>
+        )}
       </div>
 
       <div style={{ marginBottom: 12 }}>

@@ -11,7 +11,8 @@ Overview of steps
 1) Choose a runtime (WASM/WebGPU) and get the runtime script
 2) Obtain a quantized 2.7B model (GGUF/GGML) and host it publicly (Hugging Face, GitHub, or CDN)
 3) Place the runtime script in your Next.js public/web folder (or host it on a CDN)
-4) Configure MODEL_URL in the /local page field and click "Load model" → then run inference
+4) Configure NEXT_PUBLIC_MODEL_URL (optional) to prefill the model URL or let users paste a URL into /local
+5) Click "Load model" → then run inference
 
 Recommended runtimes
 - llama.cpp web builds (ggml/wasm): https://github.com/ggerganov/llama.cpp/tree/master/web
@@ -43,6 +44,10 @@ How to host model binaries
 Where to get a quantized 2.7B model
 - Search Hugging Face for 2.7B models that provide GGUF/GGML/GPTQ checkpoints. Example search terms: "2.7B gguf" or the model name plus "gguf".
 - If you only have transformer weights, you may need to convert and quantize them to GGUF/GGML using community tools — conversion is non-trivial.
+
+Prefilling the model URL (automatic)
+- You can set NEXT_PUBLIC_MODEL_URL in your Vercel project (or local .env) to a direct model download URL to prefill the /local page for all users.
+- In Vercel: Project → Settings → Environment Variables → Add NEXT_PUBLIC_MODEL_URL = https://your-host/model.gguf
 
 Fallbacks and hybrid design
 - Many users/devices will not be able to run a 2.7B model locally. The app includes server-side inference proxy routes (/api/infer/*) which you can enable to handle heavy jobs or low-capability devices.
